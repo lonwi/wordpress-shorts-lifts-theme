@@ -205,16 +205,22 @@ function get_user_resticted_manufacturers_price( $price, $product ){
 }
 function get_replaced_ids($post_id){
 	global $post;
-	$replaced_ids = false;
+	$product_ids = false;
 	if(isset($post_id) && !empty($post_id)){
 		$id = $post_id;
 	}else{
 		$id = $post->ID;
 	}
 	if(isset($id) && !empty($id)) {
-		$replaced_ids = array_filter( array_map( 'absint', (array) get_post_meta( $id, '_product_replaced_by_ids', true ) ) );
+		$replaced_ids = preg_replace('/\s+/', '', get_post_meta( $id, '_product_replaced_by_ids', true ));
+		$replaced_ids = (array) explode(',',  $replaced_ids);
+		foreach ( $replaced_ids as $replaced_id ) {
+			if($product_id = wc_get_product_id_by_sku($replaced_id)){
+				$product_ids[] = $product_id;
+			}
+		}
 	}
-	return $replaced_ids;
+	return $product_ids;
 }
 
 function is_wc_endpoint( $endpoint = false ) {
@@ -400,19 +406,16 @@ function woocommerce_single_title_layout_2(){
 	echo '<h2 class="product-subtitle">'.$subtitle.'</h2>';
 	}
 }
-
-add_action( 'woocommerce_single_product_summary', 'woocommerce_single_replaced_product', 1 );
 function woocommerce_single_replaced_product(){
 	global $woocommerce, $post, $product;
 	$replaced_ids = get_replaced_ids($post->ID);
 	if($replaced_ids){
-		echo '<span class="title-note">Replaced By:</span>';
+		echo '<span class="replaced-by-title">Product Replaced by:</span>';
 		foreach($replaced_ids as $product_id){
-			echo '<span class="replaced-by-title"><a href="'.get_permalink($product_id).'" style="display:block">'.get_product_name($product_id).'</a></span>';
+			echo '<span class="replaced-by-sku"><a href="'.get_permalink($product_id).'" style="display:block" title ="'.get_product_name($product_id).'">'.$product->get_sku().'</a></span>';
 		}
 	}
 }
-
 // Add Social Share
 add_action( 'woocommerce_after_single_product_summary', 'woo_single_social_share', 10 );
 function woo_single_social_share(){
@@ -463,30 +466,35 @@ function woo_single_shop_layout_hack(){
 		}else{
 			$shopmode = get_post_meta( $post->ID, '_enquire_mode', true );
 			$enable_3d_view = get_post_meta( $post->ID, '_enable_3d_view', true );
+			$replaced_ids = get_replaced_ids($post->ID);
 			if(isset($shopmode) && $shopmode != 'yes' && is_user_logged_in() ){
 				if(isset($product->price) && $product->price > 0) {
-					if(get_user_resticted_manufacturers() === true){
-						// Add price
-						add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 15 );
-
-						// Add Enquire Button
-						add_action( 'woocommerce_single_product_summary', 'woo_single_enquire_button', 60 );
-
-						// Add Enquire Form
-						add_action( 'woocommerce_single_enquire_form', 'woo_single_enquire_form', 60 );
-
+					if($replaced_ids){
+						add_action( 'woocommerce_single_product_summary', 'woocommerce_single_replaced_product', 30 );
 					}else{
-						// Add price
-						add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 15 );
+						if(get_user_resticted_manufacturers() === true){
+							// Add price
+							add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 15 );
 
-						// Add to cart
-						if($product->is_type('simple')){
-							add_action( 'woocommerce_single_product_summary', 'woo_single_add_to_cart_ajax', 30 );
+							// Add Enquire Button
+							add_action( 'woocommerce_single_product_summary', 'woo_single_enquire_button', 60 );
+
+							// Add Enquire Form
+							add_action( 'woocommerce_single_enquire_form', 'woo_single_enquire_form', 60 );
+
 						}else{
-							add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+							// Add price
+							add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 15 );
+
+							// Add to cart
+							if($product->is_type('simple')){
+								add_action( 'woocommerce_single_product_summary', 'woo_single_add_to_cart_ajax', 30 );
+							}else{
+								add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+							}
+							// Add Notice
+							add_action( 'woocommerce_single_product_summary', 'woo_single_minimum_notice', 60 );
 						}
-						// Add Notice
-						add_action( 'woocommerce_single_product_summary', 'woo_single_minimum_notice', 60 );
 					}
 				} else {
 					// Add price
@@ -674,12 +682,7 @@ function woo_custom_cart_button_text() {
 /* Single Layout - Info Mode
 ******************************************************************/
 add_action( 'woocommerce_before_main_content', 'woo_single_info_layout_hack' );
-
-function woo_single_info_layout_hack(){
-
-
-}
-
+function woo_single_info_layout_hack(){}
 
 /* Catalog Menu
 ******************************************************************/
@@ -849,10 +852,20 @@ function woo_add_custom_advanced(){
 
 add_action( 'woocommerce_product_options_related', 'woo_add_custom_linked_products_fields' );
 function woo_add_custom_linked_products_fields() {
-	global $woocommerce, $post;
-
-	// Product Select
+	global $woocommerce, $product, $post;
+	// Text Field
+	woocommerce_wp_text_input(
+		array(
+			'id'          => '_product_replaced_by_ids',
+			'label'       => __( 'Replaced By (SKUs)', 'woocommerce' ),
+			'description' => __( 'Comma sparated values, no spaces', 'woocommerce' ),
+			'desc_tip'    => true,
+		)
+	);
 ?>
+
+
+<?php /*
 <div class="options_group">
 	<p class="form-field">
 		<label for="product_replaced_by_ids"><?php _e( 'Replaced By', 'woocommerce' ); ?></label>
@@ -871,6 +884,7 @@ function woo_add_custom_linked_products_fields() {
 		?>" value="<?php echo implode( ',', array_keys( $json_ids ) ); ?>" /> <img class="help_tip" data-tip='<?php esc_attr_e( 'It will display replaced by product link.', 'woocommerce' ) ?>' src="<?php echo WC()->plugin_url(); ?>/assets/images/help.png" height="16" width="16" />
 	</p>
 </div>
+*/?>
 <?php
 }
 

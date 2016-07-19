@@ -4242,6 +4242,16 @@ ul.products li > a h3 .product-name {
   font-size: 12px;
 }
 ul.products li .product-under-title {
+  font-size: 12px;
+  margin: 10px 0;
+}
+ul.products li .replaced-by-title {
+  color: #404040;
+  margin: 10px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+ul.products li .replaced-by-sku {
   margin: 10px 0;
   font-size: 12px;
 }
@@ -4505,7 +4515,7 @@ ul.products li > p.price .discount-note {
   margin-bottom: 20px;
 }
 .product .summary span.sku,
-.product .summary span.replaced-by-title,
+.product .summary span.replaced-by-sku,
 .product .summary h1.product_title {
   display: block;
   font-size: 20px;
@@ -4518,6 +4528,9 @@ ul.products li > p.price .discount-note {
 .product .summary h1.product_title {
   border-bottom: 0;
   padding-bottom:15px;
+}
+.product .summary span.replaced-by-sku {
+  text-align: center;
 }
 .product .summary .discount-note-block {
   background: #8dc73d;
@@ -4579,6 +4592,14 @@ ul.products li > p.price .discount-note {
   color: #000000;
   font-size: 12px;
 }
+.product .summary .replaced-by-title {
+    border-top:1px solid #eeeeee;
+    display:block;
+    color:#000;
+    font-size:14px;
+    padding: 15px 0;
+    text-align: center;
+  }
 .product .summary .cart {
   border: 1px solid #eeeeee;
   padding: 15px;

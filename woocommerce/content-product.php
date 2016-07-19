@@ -82,7 +82,14 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] ) {
 		 *
 		 * @hooked woocommerce_template_loop_add_to_cart - 10
 		 */
-		do_action( 'woocommerce_after_shop_loop_item' );
+		if(!$replaced_ids = get_replaced_ids($post->ID)){
+			do_action( 'woocommerce_after_shop_loop_item' );
+		}else{
+			echo '<span class="replaced-by-title">Product Replaced by:</span>';
+			foreach($replaced_ids as $product_id){
+				echo '<span class="replaced-by-sku"><a href="'.get_permalink($product_id).'" style="display:block" title ="'.get_product_name($product_id).'">'.$product->get_sku().'</a></span>';
+			}
+		}
 
 	?>
 

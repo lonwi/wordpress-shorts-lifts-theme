@@ -226,6 +226,16 @@ ul.products {
 				}
 			}
 		}
+		.replaced-by-title {
+			color: #404040;
+			margin: 10px 0;
+			font-size: 14px;
+			font-weight: 600;
+		}
+		.replaced-by-sku {
+			margin: 10px 0;
+			font-size: 12px;
+		}
 		.product-under-title {
 			margin:10px 0;
 			font-size:12px;
@@ -441,7 +451,7 @@ ul.products {
 		border:4px solid @gray-lighter;
 		margin-bottom:20px;
 		span.sku,
-		span.replaced-by-title,
+		span.replaced-by-sku,
 		h1.product_title {
 			display:block;
 			font-size:20px;
@@ -455,6 +465,9 @@ ul.products {
 		h1.product_title {
 			border-bottom: 0;
 			padding-bottom:15px;
+		}
+		span.replaced-by-sku {
+			text-align: center;
 		}
 		.discount-note-block {
 			background:@green-light;
@@ -521,6 +534,13 @@ ul.products {
 			display:block;
 			color:@black;
 			font-size:12px;
+		}
+		.replaced-by-title {
+			border-top:1px solid @gray-lighter;
+			display:block;
+			color:@black;
+			font-size:14px;
+			text-align: center;
 		}
 		.cart {
 			border:1px solid @gray-lighter;
