@@ -1,0 +1,113 @@
+/******************************************************************
+Site Name: Shorts Lifts
+Author: Websquare
+
+Stylesheet: Footer Stylesheet
+******************************************************************/
+
+#footer {}
+
+.footer {
+	border-top:4px solid lighten(#000, 87.5%);
+	background:@gray-lighter;
+	padding:30px 0;
+	font-size:11px;
+	.uppercase();
+	.footer-newsletter {
+		text-align:right;
+		margin-bottom:10px;
+		a {
+			color:@black;
+			font-weight:600;
+			text-align:right;
+			line-height:20px;
+		}
+		.icon-newsletter {
+			.icon();
+			.size(20px,20px);
+			float: left;
+			background-position:-66px center;
+			margin-right:3px;
+		}
+	}
+	.footer-social {
+		text-align:right;
+		line-height:0;
+		a {
+			.icon();
+		}
+		.youtube {
+			background-position: -570px 0; 
+		}
+		.google {
+			background-position: -600px 0; 
+		}
+		.twitter {
+			background-position: -630px 0; 
+		}
+		.facebook {
+			background-position: -660px 0; 
+		}
+		.linkedin {
+			background-position: -690px 0; 
+		}
+	}
+	.copyright {
+		font-size:12px;
+		margin-bottom:0;
+	}
+	.company-reg-info {
+		text-transform:none;
+		margin-top:0;
+	}
+	.cookie-policy-footer {
+		a {
+			color:@black;
+		}
+	}
+	.websquare-logo {
+		text-align:right;
+		a {
+			.opacity(0.2);
+			&:hover {
+				.opacity(1);
+			}
+			img {
+				
+			}
+		}
+	}
+}
+.footer {
+	.menu-footer-menu-container {
+		margin-bottom:15px;
+		#menu-footer-menu {
+		}
+		ul.menu {
+			.reset();
+			li {
+				.reset();
+				line-height:30px;
+				display:inline-block;
+				list-style:none;
+				a {
+					display:inline-block;
+					color:@black;
+					&:hover {
+					}
+					&:after {
+						content:"|";
+						display:inline-block;
+						margin:0 10px;
+					}
+				}
+				
+				&:last-child {
+					a:after{
+						display:none;
+					}
+				}
+			}
+		}
+	}
+}

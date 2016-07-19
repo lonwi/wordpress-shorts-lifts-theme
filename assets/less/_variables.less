@@ -1,0 +1,60 @@
+/******************************************************************
+Site Name: Shorts Lifts
+Author: Websquare
+
+Stylesheet: Variables Stylesheet
+******************************************************************/
+
+@black: 					#000;
+@white:						#fff;
+
+@gray-darker:       		lighten(#000, 13.5%); // #222
+@gray-dark:         		lighten(#000, 20%);   // #333
+@gray:              		lighten(#000, 33.5%); // #555
+@gray-light:        		lighten(#000, 60%);   // #999
+@gray-lighter:      		lighten(#000, 93.5%); // #eee
+
+@green:						#70bd0a;
+@green-light:               #8DC73D;
+@red:						#CC0000;
+@yellow:					#ffde00;
+@blue:						#0099fa;
+
+@link-color:				@green;
+@link-hover-color:			darken(@green, 15%);
+
+@body-bg:					@white;
+
+@pattern-bg:				;
+
+@serif:						Georgia, "Times New Roman", Times, serif;
+@sans-serif:				"Open Sans","Proxima Nova W02","Proxima Nova", "Open Sans", Arial,sans-serif;
+//@sans-serif: 				"Proxima Nova W02","Proxima Nova", "Open Sans", Arial,sans-serif;
+
+.serif						{ font-family:@serif!important;}
+.sans-serif					{ font-family:@sans-serif!important;}
+
+
+@normal:					400;
+@semi-bold:					600;
+@bold: 						700;
+
+@font-size-base:        	14px;
+@font-size-large:       	ceil((@font-size-base * 1.25)); // ~18px
+@font-size-small:       	ceil((@font-size-base * 0.85)); // ~12px
+
+@font-size-h1:          	floor((@font-size-base * 2.15)); // ~30px
+@font-size-h2:         		floor((@font-size-base * 1.7)); // ~24px
+@font-size-h3:          	ceil((@font-size-base * 1.5)); // ~21px
+@font-size-h4:          	ceil((@font-size-base * 1.25)); // ~18px
+@font-size-h5:          	@font-size-base;
+@font-size-h6:          	ceil((@font-size-base * 0.85)); // ~12px
+
+@line-height-base:       	1.5; 
+@line-height-computed:    	floor((@font-size-base * @line-height-base));
+
+@headings-font-family:    	@sans-serif;
+@headings-font-weight:    	600;
+@headings-line-height:    	1.1;
+@headings-color:          	#404040;
+@headings-small-color:    	#404040;

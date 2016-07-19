@@ -1,0 +1,248 @@
+/******************************************************************
+Site Name: Shorts Lifts
+Author: Websquare
+
+Stylesheet: Forms Stylesheet
+******************************************************************/
+form {
+	.form-row {
+		margin:5px 0;
+		.clearfix;
+		label {
+			display:block;
+			&.checkbox {
+				display: inline;
+			}
+		}
+		select {
+			width: 100%;
+		}
+		.input-text {
+			width:100%;
+		}
+	}
+	.form-row-first, .form-row-last {
+		float:left;
+		width: 47%;
+		overflow: visible;
+	}
+	.form-row-last {
+		float: right;
+	}
+	.form-row-wide {
+		clear: both;
+	}
+}
+
+.form-separator {
+	display:block;
+	height:1px;
+	margin:30px 0 25px;
+	background:darken(#dfdfdf, 5%);
+	clear:both;
+}
+label {
+	display:block;
+	margin:5px 10px;
+	font-size:14px;
+}
+legend {
+	padding:0 10px;
+}
+/* hides the spin-button for firefox */
+input[type=number] {
+    -moz-appearance:textfield;
+}
+/* hides the spin-button for chrome*/
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+	background:#fff;
+	border:1px solid #dfdfdf;
+	
+	padding:8px 10px;
+	margin:0;
+	
+	width:100%;
+	.border-radius(3px);
+	&:focus {
+		border:1px solid @green;
+		outline: none;
+		//.box-shadow(0 0 5px @green);
+	}
+}
+
+input[type="submit"] {
+	.button();
+}
+
+textarea {
+	height:150px;
+}
+
+select {
+	cursor:pointer;
+	
+	background:#fff;
+	border:1px solid #dfdfdf;
+	
+	padding:8px 10px;
+	margin:0;
+	
+	width:100%;
+	//.border-radius(5px);
+	option {
+		margin:5px;
+	}
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+	width:auto;
+}
+
+input[type="radio"] {
+
+}
+
+input[type="checkbox"]:hover {
+
+}
+
+input[type="checkbox"]:active,
+input[type="radio"]:active {
+
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+
+}
+
+input[type="checkbox"]:checked::after {
+
+}
+
+input[type="radio"]:checked::after {
+
+}
+
+input[type="checkbox"]:focus,
+input[type="radio"]:focus {
+
+}
+
+
+input[disabled],
+select[disabled],
+option[disabled],
+textarea[disabled] {
+	cursor: not-allowed!important;
+	.opacity(0.5);
+  &:hover {
+  }
+}
+option[disabled] {
+}
+
+
+input[readonly],
+select[readonly],
+textarea[readonly] {
+	cursor: not-allowed!important;
+	.opacity(0.5);
+  &:focus {
+  }
+}
+
+label.hidden {
+	visibility:hidden;
+}
+label.inline {
+	display: inline!important;
+}
+select {
+	cursor: pointer;
+	margin: 0;
+}
+
+abbr.required {
+	//color: red;
+}
+
+.input-checkbox {
+	display: inline;
+	margin: -2px 8px 0 0;
+	text-align: center;
+	vertical-align: middle;
+}
+.input-field-error {
+	border:1px solid @red!important;
+	.box-shadow(0 0 5px @red)!important;
+}
+
+/* Custom Select */
+
+.customSelect { 
+/* This is the default class that is used */
+/* Put whatever custom styles you want here */
+	cursor:pointer;	
+	background:#fff url(../images/icons-vert.png) no-repeat right 5px top -24px;
+	border:1px solid #dfdfdf;
+		
+	padding:8px 30px 8px 10px;
+	margin:0;
+	
+	width:100%;
+	max-height:40px!important;
+	//.border-radius(5px);
+	.transition(0.3s border);
+}
+.customSelect.customSelectHover {
+/* Styles for when the select box is hovered */
+}
+.customSelect.customSelectOpen {
+/* Styles for when the select box is open */	
+}
+.customSelect.customSelectFocus {
+/* Styles for when the select box is in focus */
+	border:1px solid @green;
+	.box-shadow(0 0 5px @green);
+	background:#fff url(../images/icons-vert.png) no-repeat right 5px top -184px;
+	.customSelectInner {
+		cursor:pointer;
+	}
+}
+.customSelect.customSelectDisabledOption {
+}
+.customSelect.customSelectDisabled {
+	cursor: not-allowed!important;
+	.opacity(0.5);
+	.customSelectInner {
+		cursor: not-allowed!important;
+	}
+}
+.customSelectInner {
+}
+
+/* Lift Spares Search Page */

@@ -1,0 +1,268 @@
+/******************************************************************
+Site Name: Shorts Lifts
+Author: Websquare
+
+Stylesheet: Base Stylesheet
+******************************************************************/
+* {
+	.box-sizing(border-box);
+}
+.clearfix() {
+	*zoom:1;
+	
+	&:before,
+	&:after {
+	    content:"";
+	    display:table;
+	}
+	&:after {
+	    clear:both;
+	}
+}
+.center-block() {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.size(@width; @height) {
+  width: @width;
+  height: @height;
+}
+.square(@size) {
+  .size(@size; @size);
+}
+// Placeholder text
+.placeholder(@color: @input-color-placeholder) {
+  &::-moz-placeholder           { color: @color;   // Firefox
+                                  opacity: 1; } // See https://github.com/twbs/bootstrap/pull/11526
+  &:-ms-input-placeholder       { color: @color; } // Internet Explorer 10+
+  &::-webkit-input-placeholder  { color: @color; } // Safari and Chrome
+}
+.text-overflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hide-text() {
+  font: ~"0/0" a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.text-hide() {
+  .hide-text();
+}
+.reset() {
+	margin:0;
+	padding:0;
+}
+.icon() {
+	background-image:url(../images/icons.png);
+	background-repeat:no-repeat;
+	background-position:0 0;
+	display:inline-block;
+	.square(30px);
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.icon-email-url {
+	display:block;
+	margin:5px 0;
+	span{
+		.icon();
+		float:left;
+		margin-right:10px;
+		background-position:-68px center;
+		.square(18px);
+	}
+}
+.icon-linkedin-url {
+	display:block;
+	margin:5px 0;
+	span{
+		.icon();
+		float:left;
+		margin-right:10px;
+		background-position:0 0;
+		background-position:-728px center;
+		.square(18px);
+	}
+}
+html, body {
+	font-family: @sans-serif;
+	font-size:@font-size-base;
+	line-height:@line-height-computed;
+	height: 100%;
+	width: 100%;
+	min-width: 1000px;
+}
+
+body {
+	.selection(~'color: #fff; background: #70bd0a;');
+}
+
+/** RESET AND LAYOUT
+===================================*/
+
+.bx-wrapper {
+	position: relative;
+	margin: 0 auto;
+	padding: 0;
+	*zoom: 1;
+}
+
+.bx-wrapper img {
+	max-width: 100%;
+	display: block;
+}
+
+/* Titles
+******************************************************************/
+
+.title {
+	font-weight:600;
+	border-bottom:1px solid #cdcdcd;
+	padding-bottom:10px;
+	margin-top:0;
+	margin-bottom:21px;
+	font-size:22px;
+	a {
+		color:inherit;
+	}
+}
+h1.entry-title {
+	.title();
+	font-size:22px;
+}
+h2.entry-title {
+	.title();
+	font-size:22px;
+}
+h3.entry-title {
+	.title();
+	font-size:20px;
+}
+h4.entry-title {
+	.title();
+	font-size:16px;
+}
+.title-small {
+	.title();
+	font-size:18px;
+}
+.demo_store {
+	text-align:center;
+	padding:20px;
+	background:@gray-lighter;
+	border-top:2px solid @green;
+	border-bottom:2px solid @green;
+}
+
+/* Table
+******************************************************************/
+table {
+	width:100%;
+	thead {
+	}
+	tr {
+		th, td {
+			padding:5px;
+			border:1px solid @gray-lighter;
+			text-align:left;
+		}
+		th {
+			font-weight:600;
+			text-align:left;
+		}
+		td {
+		}
+	}
+	tbody {
+		tr {
+			.transition(all 0.6s);
+			&:hover {
+			background:@gray-lighter;
+		}
+		}
+	}
+}
+
+/* Alerts
+******************************************************************/
+.alert {
+	.clearfix();
+	position: relative;
+	background:#edffd4;
+	border: 1px solid @green;
+	color:@black;
+	font-weight:600;
+	font-size:12px;
+	line-height:1.5;
+	padding: 10px 25px 10px 50px;
+	margin: 0 0 20px 0;
+	position:relative;
+	&:after {
+		content:"";
+		background: url(../images/icons.png) no-repeat -450px 0;
+		width:30px;
+		height:30px;
+		
+		position:absolute;
+		display:inline-block;
+		
+		top:5px;
+		left:10px;
+	}
+	h1, h2, h3, h4, h5, h6{
+		margin:0 0 10px;
+		padding:0;
+	}
+	p {
+		margin:0 0 10px;
+		padding:0;
+	}
+}
+
+/* Pagination
+******************************************************************/
+.after-loop-container {
+	border-top: 1px solid #cdcdcd;
+	border-bottom: 1px solid #cdcdcd;
+	padding:15px 10px;
+	margin-bottom:20px;
+	p {
+		margin:0;
+		padding:0;
+	}
+}
+.pagination {
+	text-align:right;
+	line-height:40px;
+	a, span {
+		display:inline-block;
+		margin:0;
+		padding:0 3px;
+		font-size:14px;
+		line-height:21px;
+		color:@black;
+		&.current {
+			color:@green;
+		}
+
+	}
+	a {
+		&:hover {
+			color:@green;
+		}
+	}
+	span.pagination-page {
+		margin-right:10px;
+	}
+	.page-number {
+	}
+}
+
+.woocommerce-pagination {
+}

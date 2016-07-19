@@ -1,0 +1,121 @@
+/******************************************************************
+Site Name: Shorts Lifts
+Author: Websquare
+
+Stylesheet: Buttons Stylesheet
+******************************************************************/
+
+.button {
+	border: none;
+	background:@green;
+	color:@white;
+	cursor:pointer;
+	display:inline-block;
+	text-align:center;
+	margin:0;
+	padding:10px 20px;
+	text-transform:uppercase;
+	font-size:12px;
+	line-height: normal;
+	.semi-bold();
+	.border-radius(25px);
+	
+	.opacity(1);
+	.transition(all 0.5s);
+	
+ 	&:hover,
+  	&:focus {
+		outline:0!important;
+    	text-decoration: none;
+		.opacity(0.9);
+  	}
+	&.square {
+		.border-radius(0);
+	}
+	&.full-width {
+		width:100%;
+	}
+	
+	&.small {
+		padding:8px 20px;
+		font-size:12px;
+	}
+	
+	&.large {
+		padding:12px 30px;
+		font-size:14px;
+	}
+	
+	&.green {
+		background:@green;
+	}
+	&.gray {
+		background:@gray;
+	}
+	&.gray-light {
+		background:@gray-light;
+	}
+	
+	&.next {
+		background-image:url(../images/icons-vert.png);
+		background-repeat: no-repeat;
+		background-position: right 5px top -386px;
+		padding-right:35px;
+		&.large {
+			background-position: right 5px top -384px;
+		}
+	}
+	&.previous {
+		background-image:url(../images/icons-vert.png);
+		background-repeat: no-repeat;
+		background-position: 5px -426px;
+		padding-left:40px;
+		&.large {
+			background-position: right 5px top -424px;
+		}
+	}
+	&.addtocart {
+		background-image:url(../images/icons-vert.png);
+		background-repeat: no-repeat;
+		background-position: right 10px top -509px;
+		padding-right:40px;
+		&.large {
+			background-position: right 10px top -504px;
+		}
+	}
+	&.basket {
+		background-image:url(../images/icons-vert.png);
+		background-repeat: no-repeat;
+		background-position: right 10px top -509px;
+		padding-right:40px;
+		&.large {
+			background-position: right 10px top -504px;
+		}
+	}
+	&.single_add_to_cart_button {
+		background-image:url(../images/icons-vert.png);
+		background-repeat: no-repeat;
+		background-position: right 10px top -509px;
+		padding-right:40px;
+		&.large {
+			background-position: right 10px top -504px;
+		}
+	}
+	
+}
+.button-enquire {
+	background:@green;
+	border:1px solid @green;
+	color:@white;
+	cursor:pointer;
+	display:block;	
+	font-size:16px;
+	padding:12px 30px;
+	margin:0 auto;
+	width:100%;
+	
+	line-height: normal;
+	.semi-bold();
+    text-align: center;
+
+}

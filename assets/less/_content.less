@@ -1,0 +1,599 @@
+/******************************************************************
+Site Name: Shorts Lifts
+Author: Websquare
+
+Stylesheet: Content Stylesheet
+******************************************************************/
+
+#content {
+	position:relative;
+}
+#content.background-pattern {
+	background:#e8e8e8;
+	.background-image(linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0.8) 100%), url(../images/geometric-pattern.jpg));
+	margin-top:-15px;
+}
+#content.background-pattern .block-breadcrumbs {
+	margin-top:0; 
+}
+.content {
+	/*border-bottom:1px solid #efefef;*/
+	padding:30px 0;
+	img {
+		max-width:100%;
+		height:auto;
+	}
+}
+#main {
+}
+
+.main {
+}
+.entry-content {
+	h1.title {
+		font-size:22px;
+	}
+	h2.title {
+		font-size:22px;
+	}
+	h3.title {
+		font-size:20px;
+	}
+	h4.title {
+		font-size:16px;
+	}
+	h5.title {
+		font-size:14px;
+	}
+	h6.title {
+		font-size:12px;
+	}
+}
+
+
+/* Homepage
+******************************************************************/
+.home {
+	.content {
+		//padding-top:0;
+	}
+}
+/*
+.home-box {
+	.size(320px,500px);
+	.reset();
+	position: relative;
+	overflow:hidden;
+	float:left;
+	.home-box-title {
+		position:absolute;
+		z-index:2;
+		bottom:50px;
+		left:0;
+		background:url(../images/homepage-titles.png) no-repeat 0 0;
+		width:320px;
+		height:124px;
+		text-align:right;
+		span {
+			font-size:18px;
+			display:block;
+			text-align:right;
+			color:@black;
+			font-weight:700;
+			padding-top:50px;
+			padding-right:20px;
+		}
+		
+	}
+	.home-box-image {
+		z-index:1;
+		position:relative;
+		display:block;
+	}
+}
+*/
+.home-box {
+	.fourcol();
+	height:280px;
+	position: relative;
+	overflow:hidden;
+	float:left;
+	.home-box-title {
+		position:absolute;
+		z-index:2;
+		bottom:50px;
+		left:0;
+		background:url(../images/homepage-titles.png) no-repeat 0 0;
+		width:320px;
+		height:124px;
+		text-align:right;
+		span {
+			font-size:18px;
+			display:block;
+			text-align:right;
+			color:@black;
+			font-weight:700;
+			padding-top:50px;
+			padding-right:20px;
+		}
+		
+	}
+	.home-box-image {
+		z-index:1;
+		position:relative;
+		display:block;
+	}
+}
+.home-box {
+	a {
+		.transition(none);
+		&:hover {
+			.opacity(1);
+		}
+	}
+	&.home-box-1 {
+		.first();
+		.home-box-title  {
+			background-position:0 0;
+		}
+	}
+	&.home-box-2 {
+		.home-box-title  {
+			background-position:-320px 0;
+		}
+	}
+	&.home-box-3 {
+		.last();
+		.home-box-title  {
+			background-position:-640px 0;
+		}
+	}
+}
+/* 404 Page
+******************************************************************/
+
+/* About Page
+******************************************************************/
+
+/* Contact Page
+******************************************************************/
+
+.contact-page {
+	.contact-form {
+		.form-contact-form {
+			//padding: 15px;
+			//border: 4px solid #eeeeee;
+		}
+	}
+	.contact-details {
+		h2.title {
+			font-size:24px;
+		}
+		font-size:13px;
+		> .row {
+			margin-bottom:30px;
+		}
+	}
+	.row {
+		margin-bottom:5px;
+	}
+}
+
+/* Meet the Team Page
+******************************************************************/
+.meet-the-team-page {
+	.team-member-list-filters {
+		margin:0 0 30px;
+		a {
+			background:#e8e8e8;
+			color:@black;
+			display:inline-block;
+			float:left;
+			font-size:12px;
+			font-weight:600;
+			padding:5px 15px;
+			margin:0 10px 0 0;
+			.border-radius(25px);
+			&.active {
+				background:@green;
+				color:@white;
+			}
+		}
+	}
+}
+
+.team-member-list {
+	.team-member-list-item {
+		width:220px;
+		height:420px;
+		overflow:hidden;
+		&:nth-child(4n+1) {
+		}
+		&:nth-child(4n+4) {
+		}
+		a {
+			display:block;
+			margin:0;
+			padding:0;
+		}
+		.team-member-list-item-image {
+			border:1px solid @gray-lighter;
+			img {
+				display:block;
+				margin:0;
+				padding:0;
+			}
+		}
+		.team-member-list-item-name {
+			font-size:16px;
+			font-weight:600;
+			color:@black;
+			margin:10px 0 0;
+		}
+		.team-member-list-item-title {
+			font-size:12px;
+			font-weight:600;
+			margin:0 0 10px;
+			line-height:14px;
+			
+		}
+	}
+}
+.team-member {
+	.team-member-name {
+		font-size:16px;
+		font-weight:600;
+		color:@black;
+		margin:10px 0 0;
+		display:block;
+	}
+	.team-member-title {
+		font-size:12px;
+		font-weight:600;
+		margin:0 0 10px;
+		line-height:14px;
+		display:block;
+	}
+}
+/* Downloads Page
+******************************************************************/
+.download-grid {
+	.download-grid-item {
+		.threecol();
+		&:nth-child(4n+1) {
+			.first();
+		}
+		&:nth-child(4n){
+			.last();
+		}
+		margin-bottom: 20px;
+		a {
+			display:block;
+			h3 {
+				font-size: 14px;
+				font-weight: 600;
+				height: 60px;
+				margin: 20px 0 0;
+				overflow: hidden;
+				padding: 0;
+			}
+		}
+	}
+}
+
+/* Lift Spares Search Page
+******************************************************************/
+.lift-spares-search-page {
+	padding:30px 15px;
+	h1.entry-title {
+		font-size:22px;
+		font-weight:600;
+		border-bottom:none;
+		color:@black;
+	}
+		
+	form.lift-spares-search {
+		border: 5px solid #e5e5e5;
+		overflow:hidden;
+		position: relative;
+		margin-bottom:60px;
+		.border-radius(25px);
+		
+		&:focus {
+			.box-shadow(0 0 5px @green);
+		}
+			
+		input.searchfield {
+			.border-radius(25px);
+			border:none;
+			
+			background:#fff;
+			.box-shadow(inset 0px 3px 10px 0px rgba(0,0,0,0.50));
+			
+			width:100%;
+			padding:13px 70px 13px 20px;
+			&:focus {
+				border: none;
+				.box-shadow(inset 0px 3px 10px 0px rgba(0,0,0,0.50));
+			}
+		}
+		input.searchsubmit {
+			position:absolute;
+			top:0;
+			right:0;
+			bottom:0;
+			background: @green url(../images/icons.png) no-repeat 10px center;
+			width:50px;
+			.border-radius( 0 25px 25px 0 );
+			border:none;
+			text-indent:-9999px;
+			color:@green;
+		}
+	}
+	.entry-footer {
+		margin-bottom:60px;
+	}
+	
+}
+.lift-spares-boxes {
+	.reset();
+	.lift-spare-box {
+		.reset();
+		display:block;
+		list-style:none;
+		margin:0 0 20px;
+		a {
+			display:block;
+			.reset();
+			img {
+				display:block;
+				.reset();
+			}
+		}
+	}
+}
+.lift-spares-slider {
+	.sl-slider-container .bx-controls-direction a {
+		display:none;
+	}
+}
+
+/* Lift Spares Assisted Search Page
+******************************************************************/
+.lift-spares-assisted-search-page {
+	padding:30px 15px;
+	h1.entry-title {
+		font-size:22px;
+		font-weight:600;
+		border-bottom:none;
+		color:@black;
+	}
+	form.lift-spares-assisted-search {
+		margin-bottom:30px;
+		select {
+			cursor:pointer;
+		}
+		.customSelect {
+			border: 5px solid #e5e5e5;
+			.border-radius(25px);
+			.box-shadow(inset 0px 3px 10px 0px rgba(0,0,0,0.50));
+			
+			padding:8px 20px 8px 20px;
+			cursor:pointer;
+			max-height:none!important;
+		}
+		.customSelect.customSelectFocus {
+			border: 5px solid @green;
+			.box-shadow(inset 0px 3px 10px 0px rgba(0,0,0,0.50));
+		}
+	}
+}
+/* Search
+******************************************************************/
+.search-post {
+	margin-bottom:20px;
+	border-bottom:1px solid @gray-lighter;
+	.search-post-header {
+		.clearfix();
+		.search-post-title {
+			a {
+				display:block;
+				margin:0;
+				padding:0;
+			}
+		}
+		.search-post-subtitle {
+			color:@gray-light;
+			margin:0;
+			font-style:italic;
+		}
+	}
+	.search-post-image {
+		img {
+			background:@gray-lighter;
+			padding:10px;
+			height:auto;
+			width:100%;
+		}
+	}
+	.search-post-meta {
+		.clearfix();
+		margin-bottom:20px;
+		font-weight:600;
+	}
+	.search-post-excerpt {
+		.clearfix();
+		margin-bottom:20px;
+	}
+	.search-post-content {
+		.clearfix();
+		margin-bottom:20px;
+	}
+	.search-post-footer {
+		.clearfix();
+		margin-bottom:20px;
+	}
+}
+/* News
+******************************************************************/
+.news-item {
+	margin-bottom:20px;
+	.news-item-header {
+		.clearfix();
+		a {
+			display:block;
+			margin:0;
+			padding:0;
+		}
+		.news-item-title {
+			a {
+				overflow:hidden;
+			}
+		}
+		h3.news-item-title {
+			a {
+				height:24px;
+			}
+		}
+		h4.news-item-title {
+			a {
+				height:22px;
+			}
+		}
+	}
+	.news-item-image {
+		img {
+			background:@gray-lighter;
+			padding:10px;
+			height:auto;
+			width:100%;
+		}
+	}
+	.news-item-meta {
+		.clearfix();
+		font-weight:600;
+		margin-bottom:10px;
+	}
+	.news-item-excerpt {
+		.clearfix();
+		margin-bottom:20px;
+	}
+	.news-item-content {
+		.clearfix();
+		margin-bottom:20px;
+	}
+	.news-item-footer {
+		.clearfix();
+		margin-bottom:20px;
+	}
+	&.news-item-small {
+		.news-item-image {
+			img {
+				padding:7px;
+			}
+		}
+		.news-item-meta {
+			height:44px;
+			overflow:hidden;
+		}
+		.news-item-excerpt {
+			overflow:hidden;
+			height:64px;
+		}
+	}
+}
+
+/* 404
+******************************************************************/
+#post-404 {
+	padding:60px 0;
+	h1.entry-title {
+		color:@green;
+		font-size:132px;
+		line-height: 132px;
+		border:none;
+		font-weight:700;
+		margin:0;
+		padding:0;
+	}
+	.entry-content {
+		p {
+			font-size:24px;
+			line-height:28px;
+			margin:0;
+			padding:0;
+			&.semi-bold {
+				font-size:30px;
+				line-height:60px;
+			}
+		}
+	}
+	.entry-footer {
+		padding-top:60px;
+		p {
+			font-size:18px;
+		}
+	}
+}
+
+/* Sliders
+******************************************************************/
+.sl-slider-container {
+	.sl-slider {
+		margin:0;
+		padding:0;
+		overflow:hidden;
+		height:300px;
+		li {
+			list-style:none;
+			margin:0;
+			padding:0;
+			a {
+				display:block;
+				margin:0;
+				padding:0;
+				&:hover {
+					.opacity(1);
+				}
+			}
+			img {
+				display:block;
+				margin:0;
+				padding:0;
+			}
+		}
+	}
+	.bx-viewport {
+		z-index:1;
+		position:relative;
+	}
+	.bx-controls {
+
+	}
+	.bx-controls-direction {
+		a {
+			background:url(../images/arrows-slider.png) no-repeat 0 0;
+			width:14px;
+			height:24px;
+			display:inline-block;
+			position:absolute;
+			z-index:2;
+			top:50%;
+			left:-28px;
+			margin-top:-12px;
+			text-indent:-9999px;
+			.opacity(0.4);
+			&:hover {
+				.opacity(1);
+			}
+		}
+		.bx-prev {
+			background:url(../images/arrows-slider.png) no-repeat left top;
+		}
+		.bx-next {
+			left:auto;
+			right:-28px;
+			background:url(../images/arrows-slider.png) no-repeat right top;
+		}
+	}
+}
