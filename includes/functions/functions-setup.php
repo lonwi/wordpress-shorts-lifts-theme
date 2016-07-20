@@ -1,5 +1,5 @@
 <?php
-$theme_version = '1.0.4';
+$theme_version = '1.0.5';
 
 add_action( 'after_setup_theme', 'websquare_theme_setup', 16 );
 function websquare_theme_setup () {
