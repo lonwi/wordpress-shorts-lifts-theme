@@ -2,21 +2,16 @@
 /* Before Header Hooks */
 
 add_action('websquare_before_header','websquare_before_header', 10);
-
 function websquare_before_header(){
-	
 	get_template_part( 'includes/blocks/block', 'cookie-policy' );
 	if(is_front_page()){
-		
 	}else {
-		
 	}
 }
 
 /* After Header Hooks */
 
 add_action('websquare_after_header','websquare_after_header', 10);
-
 function websquare_after_header(){
 	if(is_front_page()){
 
@@ -32,7 +27,7 @@ function websquare_after_header(){
 					$product_cat = $term;
 					break;
 				}
-				if(($partent =  woo_get_ancestor($product_cat)) && ($partent == 32)){
+				if(isset($product_cat) && ($partent =  woo_get_ancestor($product_cat)) && ($partent == 32)){
 					get_template_part( 'includes/blocks/block', 'product-search' );
 					get_template_part( 'includes/blocks/block', 'banner' );	
 					get_template_part( 'includes/blocks/block', 'breadcrumbs' );
@@ -42,7 +37,6 @@ function websquare_after_header(){
 					get_template_part( 'includes/blocks/block', 'breadcrumbs' );
 				}
 			}else{
-
 				get_template_part( 'includes/blocks/block', 'banner' );
 				get_template_part( 'includes/blocks/block', 'breadcrumbs' );
 			}
@@ -58,7 +52,6 @@ function websquare_before_footer(){
 
 /* After Footer Hooks */
 add_action('websquare_after_footer','websquare_after_footer', 10);
-
 function websquare_after_footer(){
 	get_template_part( 'includes/blocks/block', 'newsletter-sign-up' );
 }

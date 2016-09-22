@@ -17,6 +17,7 @@ function exclude_from_search() {
   $wp_post_types['attachment']->exclude_from_search = true;
 }
 
+
 /* Functions
 ================================================== */
 require_once dirname( __FILE__ ) . '/includes/functions/functions-template.php';

@@ -171,7 +171,23 @@ if ( ! defined( 'ABSPATH' ) ) {
                 
             <p class="form-row form-row-last">
                 <label for="reg_postcode"><?php _e( 'Postcode', 'woocommerce' ); ?> <abbr title="required" class="required">*</abbr></label>
+                
+                <span id="ie_postcode_container" class="hidden" style="display:block;">
+                <select name="ie_postcode" id="ie_postcode" class="custom-select">
+					<?php
+                    $ie_postcodes = get_ie_postcodes();
+                    if(isset($ie_postcodes) && !empty($ie_postcodes) ){
+                        foreach($ie_postcodes as $ie_postcode){
+                        echo '<option value="'.$ie_postcode.'">'.$ie_postcode.'</option>';
+                        }
+                    }
+                    ?>
+                </select>
+                </span>
+                
                 <input type="text" class="input-text required" name="postcode" id="reg_postcode" size="30" value="<?php if ( ! empty( $_POST['postcode'] ) ) echo esc_attr( $_POST['postcode'] ); ?>" placeholder="<?php _e( 'Postcode', 'woocommerce' ); ?>" />
+                
+                
 			</p>
             
             <p class="form-row form-row-wide">
@@ -182,8 +198,8 @@ if ( ! defined( 'ABSPATH' ) ) {
             <p class="form-row form-row-wide">
                 <label for="reg_country"><?php _e( 'Country', 'woocommerce' ); ?> <abbr title="required" class="required">*</abbr></label>
                 <select name="country" id="reg_country" class="custom-select">
-                	<option value="GB" <?php if($_POST['country'] == 'GB') echo 'selected="selected"';?>>United Kingdom</option>
-                    <option value="IE" <?php if($_POST['country'] == 'IE') echo 'selected="selected"';?>>Republic of Ireland</option>
+                	<option value="GB" <?php if(isset($_POST['country']) && $_POST['country'] == 'GB') echo 'selected="selected"';?>>United Kingdom</option>
+                    <option value="IE" <?php if(isset($_POST['country']) && $_POST['country'] == 'IE') echo 'selected="selected"';?>>Republic of Ireland</option>
                 </select>
 			</p>
             
@@ -219,6 +235,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <p class="form-row form-row-last">
                     <label for="s_postcode"><?php _e( 'Postcode', 'woocommerce' ); ?> <abbr title="required" class="required">*</abbr></label>
                     <input type="text" class="input-text required" name="s_postcode" id="s_postcode" size="30" value="<?php if ( ! empty( $_POST['s_postcode'] ) ) echo esc_attr( $_POST['s_postcode'] ); ?>" placeholder="<?php _e( 'Postcode', 'woocommerce' ); ?>"/>
+                    
                 </p>
                 
                 <p class="form-row form-row-wide">
@@ -229,8 +246,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <p class="form-row form-row-wide">
                     <label for="s_country"><?php _e( 'Country', 'woocommerce' ); ?> <abbr title="required" class="required">*</abbr></label>
                     <select name="s_country" id="s_country" class="custom-select">
-                        <option value="GB">United Kingdom</option>
-                        <option value="IE">Republic of Ireland</option>
+                        <option value="GB" <?php if(!empty($_POST['s_country'])&& $_POST['s_country'] == "GB") echo "selected";?>>United Kingdom</option>
+                        <option value="IE" <?php if(!empty($_POST['s_country'])&& $_POST['s_country'] == "IE") echo "selected";?>>Republic of Ireland</option>
                     </select>
                 </p>
                 
@@ -248,7 +265,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             
             <p class="">
             	<label for="register_accept_terms" class="inline">
-					<input name="register_accept_terms" type="checkbox" id="register_accept_terms" class="input-checkbox required" value="accept" />I have read and accept the <a href="<?php echo get_permalink('62707');?>" target="_blank">Online Account Terms and Conditions</a>
+					<input name="register_accept_terms" type="checkbox" id="register_accept_terms" class="input-checkbox required" value="accept" />I have read and accept the <a href="<?php echo get_permalink('62707');?>" target="_blank" style="display:inline;">Online Account Terms and Conditions</a>
 				</label>
             </p>
             

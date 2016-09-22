@@ -145,7 +145,11 @@ jQuery(document).ready(function ($){
     	this.reverse = false;
     	
     	//SIZING AND POSITIONING
-    	this.width, this.height;
+    	//this.width, this.height;
+		
+		this.width = parseInt(this.parameters.width, 10);
+		this.height = parseInt(this.parameters.height, 10);
+		
     	this.iniWidth, this.iniHeight;
     	this.posX=0, this.posY=0;
     	
@@ -223,9 +227,13 @@ jQuery(document).ready(function ($){
     	parseXml: function(xml){
     		var _this = this;
     		var configuration = $(xml).find("ProductViewer");
+			
+					
+			//console.log('Width: '+this.width);
+			//console.log('Height: '+this.height);
     		
-    		this.width = parseInt($(configuration).find("viewWidth").text(), 10);
-    		this.height = parseInt($(configuration).find("viewHeight").text(), 10);
+    		//this.width = parseInt($(configuration).find("viewWidth").text(), 10);
+    		//this.height = parseInt($(configuration).find("viewHeight").text(), 10);
     		
     		this.ease = parseFloat($(configuration).find("ease").text(), 10);
     		this.paddingEase = parseFloat($(configuration).find("padding_ease").text(), 10);

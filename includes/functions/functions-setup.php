@@ -1,5 +1,5 @@
 <?php
-$theme_version = '1.0.5';
+$theme_version = '1.0.10';
 
 add_action( 'after_setup_theme', 'websquare_theme_setup', 16 );
 function websquare_theme_setup () {
@@ -74,6 +74,8 @@ function websquare_theme_js() {
 
 		wp_register_script( 'expo360-js', THEME_ASSETS . 'js/expo360.min.js', array( 'jquery' ), $theme_version, false );
 		wp_localize_script( 'scripts-js', 'myAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+		
+		wp_localize_script( 'scripts-js', 'iePostodes', array( 'postcodes' => get_ie_postcodes()));
 
 		// enqueue scripts
 		wp_enqueue_script( 'jquery' );

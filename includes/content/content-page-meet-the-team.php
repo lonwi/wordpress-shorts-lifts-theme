@@ -22,7 +22,9 @@
     <div class="team-member-list clearfix">	
     	<?php $department = "";?>
     	<?php foreach($members as $member):?>
-        <?php $department = array_shift(get_the_terms( $member->ID, 'departments' ));?>	
+       	<?php if($department = get_the_terms( $member->ID, 'departments' )):?>
+        <?php if(is_array($department))$department = array_shift($department);?>
+
         <div class="team-member-list-item" data-groups='["all","<?php echo $department->slug;?>"]'>
         	<a href="<?php echo get_permalink($member->ID);?>">
 				<div class="team-member-list-item-image">
@@ -37,6 +39,7 @@
 				<div class="team-member-list-item-title"><?php echo get_field('job_title', $member->ID);?></div>
             </a>
         </div>
+        <?php endif;?>
     	<?php endforeach;?>
     </div>
 	

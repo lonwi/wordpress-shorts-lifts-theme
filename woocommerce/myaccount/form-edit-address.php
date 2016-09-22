@@ -10,11 +10,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-global $current_user;
+$current_user = wp_get_current_user();
 
 $page_title = ( $load_address === 'billing' ) ? __( 'Billing Address', 'woocommerce' ) : __( 'Shipping Address', 'woocommerce' );
-
-get_currentuserinfo();
 ?>
 <?php wc_print_notices(); ?>
 
@@ -24,7 +22,63 @@ get_currentuserinfo();
 
 <?php else : ?>
 
-	<form method="post">
+	<script>
+		jQuery(document).ready(function() {
+			var postcodes = <?php echo json_encode(get_ie_postcodes());?>;
+			var form = jQuery('form#account_edit_address_form_<?php echo $load_address;?>');
+			
+			var formCountry = form.find('select#<?php echo $load_address;?>_country');
+			var formPostcode = form.find('input#<?php echo $load_address;?>_postcode');
+			
+			var formPostcodeContainer = jQuery('<span id="<?php echo $load_address;?>_postcode_ie_container" style="display:block;" class="hidden"><select name="<?php echo $load_address;?>_postcode_ie" id="<?php echo $load_address;?>_postcode_ie"></select></span>');
+
+			formPostcodeContainer.appendTo('form#account_edit_address_form_<?php echo $load_address;?> #<?php echo $load_address;?>_postcode_field');
+			
+			var ieFormPostcode = jQuery('select#<?php echo $load_address;?>_postcode_ie');
+		
+			jQuery.each( postcodes, function( key, value ) {
+				ieFormPostcode.append(jQuery('<option value="'+value+'">'+value+'</option>'));
+			});
+			
+			ieFormPostcode.not( ".hasCustomSelect" ).customSelect();
+			
+			if(formCountry.val() === 'IE'){
+				formPostcode.addClass('hidden');
+				formPostcodeContainer.removeClass('hidden');
+				
+				if(form.find('select#<?php echo $load_address;?>_postcode_ie option[value="'+formPostcode.val()+'"]').length > 0){
+					ieFormPostcode.val(formPostcode.val()).trigger('render');
+				}
+				formPostcode.val(ieFormPostcode.val());
+			}
+			
+			formCountry.on('change', function() {
+				var country = this.value;
+				
+				formPostcode.removeClass('hidden');
+				formPostcodeContainer.removeClass('hidden');
+				ieFormPostcode.trigger('render');
+				
+				if(country === 'IE'){
+					formPostcode.addClass('hidden');
+					if(form.find('select#<?php echo $load_address;?>_postcode_ie option[value="'+formPostcode.val()+'"]').length > 0){
+						ieFormPostcode.val(formPostcode.val()).trigger('render');
+					}
+					formPostcode.val(ieFormPostcode.val());
+				}else{
+					formPostcodeContainer.addClass('hidden');
+				}
+				
+			});
+			
+			ieFormPostcode.on('change', function() {
+				var ieFormPostcodeValue = this.value;
+				formPostcode.val(ieFormPostcodeValue);
+			});
+		});
+	</script>
+
+	<form method="post" id="account_edit_address_form_<?php echo $load_address;?>">
 
 		<!--<h3 class="title"><?php echo apply_filters( 'woocommerce_my_account_edit_address_title', $page_title ); ?></h3>-->
 

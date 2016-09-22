@@ -237,7 +237,7 @@
 		button.on('click', function(){
 			jQuery('.create-account-button-container').hide();
 			jQuery('.create-account-register-form').fadeIn();
-			customSelect.customSelect();
+			customSelect.not( ".hasCustomSelect" ).customSelect();
 			return false;
 		});
 
@@ -373,31 +373,48 @@
 			button = form.find('.button'),
 			required = form.find('input'),
 			requiredmatch1 = form.find('input.required-match-1'),
-			requiredmatch2 = form.find('input.required-match-2');
+			requiredmatch2 = form.find('input.required-match-2'),
+			ie_postcode_container = form.find('#ie_postcode_container'),
+			ie_postcode =  form.find('select#ie_postcode');
 
 		if(countrySelect.val() === 'IE'){
-			postcode.removeClass('required');
-			postcode.prev('label').find('.required').remove();
-			postcode.next('small.red').remove();
+			postcode.addClass('hidden');
+			ie_postcode_container.removeClass('hidden');
+			postcode.val(ie_postcode.val());
+			//postcode.removeClass('required');
+			//postcode.prev('label').find('.required').remove();
+			//postcode.next('small.red').remove();
 		}
 
 		countrySelect.on('change', function() {
 			var country = this.value;
 
-			postcode.removeClass('input-field-error');
+			//postcode.removeClass('input-field-error');
+			
+			postcode.removeClass('hidden');
+			ie_postcode_container.removeClass('hidden');
+			ie_postcode.trigger('render');
 			if(country === 'IE'){
+				postcode.addClass('hidden');
+				postcode.val(ie_postcode.val());
 				if(postcode.hasClass('required')){
-					postcode.removeClass('required');
-					postcode.prev('label').find('.required').remove();
-					postcode.next('small.red').remove();
+					//postcode.removeClass('required');
+					//postcode.prev('label').find('.required').remove();
+					//postcode.next('small.red').remove();
 				}
 			}else{
+				ie_postcode_container.addClass('hidden');
 				if(!postcode.hasClass('required')){
-					postcode.addClass('required');
-					postcode.prev('label').append('<abbr class="required" title="required">*</abbr>');
+					//postcode.addClass('required');
+					//postcode.prev('label').append('<abbr class="required" title="required">*</abbr>');
 				}
 			}
 
+		});
+		
+		ie_postcode.on('change', function() {
+			var ie_postcode_value = this.value;
+			postcode.val(ie_postcode_value);
 		});
 
 		required.each(function(){
@@ -494,6 +511,7 @@
 			}
 		});
 	}
+	
 	function checkoutSteps(){
 		var stepsBar = jQuery('.checkout-bar-steps');
 
@@ -507,6 +525,7 @@
 
 			var countrySelectBilling = jQuery('#billing_country'),
 				postcodeBilling = jQuery('#billing_postcode');
+				
 
 			if(countrySelectBilling.val() === 'IE'){
 				postcodeBilling.parent().removeClass('validate-required', 'woocommerce-invalid','woocommerce-invalid-required-field');
@@ -515,14 +534,16 @@
 
 			countrySelectBilling.on('change', function() {
 				var country = this.value;
-
 				postcodeBilling.parent().removeClass('woocommerce-invalid','woocommerce-invalid-required-field');
 				postcodeBilling.next('small.red').remove();
 				postcodeBilling.removeClass('input-field-error');
 				if(country === 'IE'){
+					
 					if(postcodeBilling.parent().hasClass('validate-required')){
 						postcodeBilling.parent().attr('data-o_class', 'form-row form-row-last address-field validate-postcode');
+						
 					}
+
 				}else{
 					postcodeBilling.parent().attr('data-o_class', 'form-row form-row-last address-field validate-required validate-postcode');
 				}
@@ -604,6 +625,8 @@
 
 			jQuery('.change-step').on('click', function(e){
 				e.preventDefault();
+				
+				var button = jQuery(this);
 
 				var currentStep	= jQuery('.checkout-step-tab.current');
 				var required 	= currentStep.find('.validate-required input, .validate-required select');
@@ -611,32 +634,38 @@
 				if(po_number.length > 0){
 					//jQuery('.purchase-order-number-review span').html(po_number);
 				}
-				currentStep.find('.input-field-error').removeClass('input-field-error');
-				required.each(function(){
-					var value = jQuery(this).val();
-					jQuery(this).parent().find('small.red').remove();
-					if(value.length > 0 ){
-						jQuery(this).removeClass('input-field-error');
-						if(jQuery(this).hasClass('input-email')){
-							if (validateEmail(value)) {
-								jQuery(this).removeClass('input-field-error');
-							}else{
-								jQuery(this).addClass('input-field-error').after('<small class="red">The email address isn&#8217;t correct.</small>');
+
+				if(button.hasClass('previous')){
+
+				}else{
+					currentStep.find('.input-field-error').removeClass('input-field-error');
+					required.each(function(){
+						var value = jQuery(this).val();
+						jQuery(this).parent().find('small.red').remove();
+						if(value.length > 0 ){
+							jQuery(this).removeClass('input-field-error');
+							if(jQuery(this).hasClass('input-email')){
+								if (validateEmail(value)) {
+									jQuery(this).removeClass('input-field-error');
+								}else{
+									jQuery(this).addClass('input-field-error').after('<small class="red">The email address isn&#8217;t correct.</small>');
+								}
 							}
+						}else{
+							jQuery(this).addClass('input-field-error').parent().append('<small class="red">This field is required.</small>');
 						}
-					}else{
-						jQuery(this).addClass('input-field-error').parent().append('<small class="red">This field is required.</small>');
+					});
+	
+					if(currentStep.find('.input-field-error').length > 0){
+						jQuery('html, body').animate({
+							scrollTop: jQuery(".input-field-error").first().offset().top - 25
+						}, 1000);
+						return false;
 					}
-				});
-
-				if(currentStep.find('.input-field-error').length > 0){
-					jQuery('html, body').animate({
-						scrollTop: jQuery(".input-field-error").first().offset().top - 25
-					}, 1000);
-					return false;
 				}
+				
+				
 				var stepLink = jQuery(this).attr('href');
-
 				var step = stepsBar.find('a.checkout-bar-step[href="'+stepLink+'"]');
 				steps.removeClass('current');
 				steps.removeClass('completed');
@@ -646,15 +675,17 @@
 				jQuery(tabs).removeClass('current');
 				jQuery(stepLink).addClass('current');
 
+				if(jQuery(stepLink).find('select.check_shipping_method').length > 0 ){
 
-				var shipping = jQuery(stepLink).find('select.check_shipping_method');
-				if(shipping.length > 0 ){
-					//shipping.prepend("<option value=''>Select Shipping Method</option>").val('');
-					shipping.val('');
 					jQuery(stepLink).on('click', 'input#place_order', function(){
-						if(shipping.val().length < 1 ){
-							jQuery('.customSelect.shipping_method.check_shipping_method').addClass('input-field-error');
-							shipping.addClass('input-field-error').parent().append('<small class="red">This field is required.</small>');
+						var shipping = jQuery('select.check_shipping_method');
+						var shippingValue = shipping.val();
+						if(shippingValue == 'local_pickup' ){
+							if(jQuery('.customSelect.shipping_method.check_shipping_method').hasClass('input-field-error')){
+							}else{
+								jQuery('.customSelect.shipping_method.check_shipping_method').addClass('input-field-error');
+								shipping.addClass('input-field-error').parent().append('<small class="red">This field is required.</small>');
+							}
 							return false;
 						}
 					});
@@ -662,7 +693,11 @@
 				if(jQuery('input#place_order').length > 0 ){
 					jQuery(stepLink).on('click', 'input#place_order', function(){
 						if(jQuery('input[name=po_number]').val().length < 1 ){
-							jQuery('input[name=po_number]').addClass('input-field-error').parent().append('<small class="red">This field is required.</small>');
+							
+							if(jQuery('input[name=po_number]').hasClass('input-field-error')){
+							}else{
+								jQuery('input[name=po_number]').addClass('input-field-error').parent().append('<small class="red">This field is required.</small>');
+							}
 							return false;
 						}
 					});
@@ -685,6 +720,7 @@
 
 				jQuery('select.hasCustomSelect:visible').trigger('render');
 				jQuery('select:visible').not( ".hasCustomSelect" ).customSelect();
+				jQuery( 'body' ).trigger('update_checkout');
 			});
 
 		}
@@ -726,8 +762,8 @@
 					$multipleselect.find('option[value="create-new"]').prop("selected", true);
 					$multipleselect.trigger('change').trigger('render').prop('disabled', true);
 
-					$shipping_country.find('option[value="'+billing_country+'"]').prop("selected", true).trigger('change');
-					$shipping_country.trigger('render').prop('disabled', true);
+					$shipping_country.find('option[value="'+billing_country+'"]').prop("selected", true);
+					
 					$shipping_first_name.val(billing_first_name).prop('disabled', true);
 					$shipping_last_name.val(billing_last_name).prop('disabled', true);
 					$shipping_company.val(billing_company).prop('disabled', true);
@@ -738,8 +774,14 @@
 					$shipping_postcode.val(billing_postcode).prop('disabled', true);
 					$shipping_email.val(billing_email).prop('disabled', true);
 					$shipping_phone.val(billing_phone).prop('disabled', true);
+					
+					$shipping_country.trigger('change').trigger('render').prop('disabled', true);
 
-
+					if(billing_country === "IE"){
+						if(jQuery('select#shipping_postcode_ie option[value="'+billing_postcode+'"]').length > 0){
+							jQuery('select#shipping_postcode_ie').prop('disabled', true).trigger('render');
+						}
+					}
 
 			}else{
 					$multipleselect.trigger('change').prop('disabled', false);
@@ -755,6 +797,10 @@
 					$shipping_postcode.prop('disabled', false);
 					$shipping_email.prop('disabled', false);
 					$shipping_phone.prop('disabled', false);
+					
+					if(jQuery('select#shipping_postcode_ie').length > 0){
+						jQuery('select#shipping_postcode_ie').prop('disabled', false).trigger('render');
+					}
 			}
 		});
 
@@ -782,6 +828,10 @@
 			$shipping_postcode.prop('disabled', false);
 			$shipping_email.prop('disabled', false);
 			$shipping_phone.prop('disabled', false);
+			
+			if(jQuery('select#shipping_postcode_ie').length > 0){
+				//jQuery('select#shipping_postcode_ie').prop('disabled', false).trigger('render');
+			}
 		});
 	}
 	function popupbox(){
@@ -801,6 +851,107 @@
 			}
 		});
 	}
+	function customPostcodeFieldCheckout(){
+		var postcodes = iePostodes.postcodes,
+			form = jQuery('form.woocommerce-checkout'),
+			billingCountry = form.find('select#billing_country'),
+			billingPostcode = form.find('input#billing_postcode'),
+			billingPostcodeContainer = jQuery('<span id="billing_postcode_ie_container" style="display:block;" class="hidden"><select name="billing_postcode_ie" id="billing_postcode_ie"></select></span>'),
+			shippingCountry = form.find('select#shipping_country'),
+			shippingPostcode = form.find('input#shipping_postcode'),
+			shippingPostcodeContainer = jQuery('<span id="shipping_postcode_ie_container" style="display:block;" class="hidden"><select name="shipping_postcode_ie" id="shipping_postcode_ie"></select></span>');
+			
+			billingPostcodeContainer.appendTo('form.woocommerce-checkout #billing_postcode_field');
+			shippingPostcodeContainer.appendTo('form.woocommerce-checkout #shipping_postcode_field');
+			
+			var ieBillingPostcode = jQuery('select#billing_postcode_ie');
+			var ieShippingPostcode = jQuery('select#shipping_postcode_ie');
+
+			jQuery.each( postcodes, function( key, value ) {
+				ieBillingPostcode.append(jQuery('<option value="'+value+'">'+value+'</option>'));
+				ieShippingPostcode.append(jQuery('<option value="'+value+'">'+value+'</option>'));
+			});
+			
+			ieBillingPostcode.not( ".hasCustomSelect" ).customSelect();
+			ieShippingPostcode.not( ".hasCustomSelect" ).customSelect();
+			
+			if(billingCountry.val() === 'IE'){
+				billingPostcode.addClass('hidden');
+				billingPostcodeContainer.removeClass('hidden');
+				
+				if(form.find('select#billing_postcode_ie option[value="'+billingPostcode.val()+'"]').length > 0){
+					ieBillingPostcode.val(billingPostcode.val()).trigger('render');
+				}
+				
+				billingPostcode.val(ieBillingPostcode.val());
+			}
+			
+			if(shippingCountry.val() === 'IE'){
+				shippingPostcode.addClass('hidden');
+				shippingPostcodeContainer.removeClass('hidden');
+				
+				if(form.find('select#shipping_postcode_ie option[value="'+shippingPostcode.val()+'"]').length > 0){
+					ieShippingPostcode.val(shippingPostcode.val()).trigger('render');
+				}
+				shippingPostcode.val(ieShippingPostcode.val());
+			}
+			
+			billingCountry.on('change', function() {
+				var country = this.value;
+				
+				billingPostcode.removeClass('hidden');
+				billingPostcodeContainer.removeClass('hidden');
+				ieBillingPostcode.trigger('render');
+				
+				if(country === 'IE'){
+					billingPostcode.addClass('hidden');
+					setTimeout(function(){
+						if(form.find('select#billing_postcode_ie option[value="'+billingPostcode.val()+'"]').length > 0){
+							ieBillingPostcode.val(billingPostcode.val()).trigger('render');
+						}
+						billingPostcode.val(ieBillingPostcode.val());
+					}, 300);
+				}else{
+					billingPostcodeContainer.addClass('hidden');
+				}
+			});
+			
+			ieBillingPostcode.on('change', function() {
+				if(billingCountry.val() === 'IE'){
+					var ieBillingPostcodeValue = this.value;
+					billingPostcode.val(ieBillingPostcodeValue);
+				}
+			});
+			
+			shippingCountry.on('change', function() {
+				var country = this.value;
+				
+				shippingPostcode.removeClass('hidden');
+				shippingPostcodeContainer.removeClass('hidden');
+				ieShippingPostcode.trigger('render');
+				if(country === 'IE'){
+					shippingPostcode.addClass('hidden');
+					setTimeout(function(){
+						if(shippingPostcode.val().length > 0){
+							if( form.find('select#shipping_postcode_ie option[value="'+shippingPostcode.val()+'"]').length > 0){
+								ieShippingPostcode.val(shippingPostcode.val()).trigger('render');
+							}
+						}
+						shippingPostcode.val(ieShippingPostcode.val());
+						jQuery( 'body' ).trigger('update_checkout');
+					}, 300);
+				}else{
+					shippingPostcodeContainer.addClass('hidden');
+				}
+			});
+			
+			ieShippingPostcode.on('change', function() {
+				if(shippingCountry.val() === 'IE'){
+					var ieShippingPostcodeValue = this.value;
+					shippingPostcode.val(ieShippingPostcodeValue);
+				}
+			});
+	}
 	jQuery(document).ready(function() {
 		sidebarToggleMenu();
 		sidebarToggleLayerNav();
@@ -811,12 +962,11 @@
 		checkoutSteps();
 		closeNotifications();
 		checkoutShippingSameAsBilling();
+		customPostcodeFieldCheckout();
 	});
 	jQuery(window).load(function() {
-
 		jQuery(document).ready(function() {
-
-			jQuery('select:visible').customSelect();
+			jQuery('select:visible').not( ".hasCustomSelect" ).customSelect();
 			blockNewsSlider();
 			blockLogoSlider();
 			teamGrid();
@@ -826,6 +976,5 @@
 
 			jQuery('img.black-and-white').hoverizr({});
 		});
-
 	});
 }());

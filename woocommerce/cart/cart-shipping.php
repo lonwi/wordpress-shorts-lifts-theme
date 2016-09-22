@@ -31,11 +31,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<input type="hidden" name="shipping_method[<?php echo $index; ?>]" data-index="<?php echo $index; ?>" id="shipping_method_<?php echo $index; ?>" value="<?php echo esc_attr( $method->id ); ?>" class="shipping_method" />
 
 			<?php elseif ( get_option( 'woocommerce_shipping_method_format' ) === 'select' ) : ?>
-
 				<select name="shipping_method[<?php echo $index; ?>]" data-index="<?php echo $index; ?>" id="shipping_method_<?php echo $index; ?>" class="shipping_method check_shipping_method">
-					<option value="">Select Shipping Method</option>
 					<?php foreach ( $available_methods as $method ) : ?>
-						<option value="<?php echo esc_attr( $method->id ); ?>" <?php selected( $method->id, $chosen_method );?>><?php echo wp_kses_post( wc_cart_totals_shipping_method_label( $method ) ); ?></option>
+                        <?php 
+						$shipping_method_label = wp_kses_post( wc_cart_totals_shipping_method_label( $method ) );
+						if($method->id == 'local_pickup'){
+							$shipping_method_label = "Select Shipping Method";
+						}
+						?>
+						<option value="<?php echo esc_attr( $method->id ); ?>" <?php selected( $method->id, $chosen_method );?>><?php echo $shipping_method_label; ?></option>
 					<?php endforeach; ?>
 				</select>
 

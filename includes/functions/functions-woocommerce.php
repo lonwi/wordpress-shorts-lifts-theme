@@ -213,7 +213,8 @@ function get_replaced_ids($post_id){
 	}
 	if(isset($id) && !empty($id)) {
 		$replaced_ids = preg_replace('/\s+/', '', get_post_meta( $id, '_product_replaced_by_ids', true ));
-		$replaced_ids = (array) explode(',',  $replaced_ids);
+		$replaced_ids = str_replace(',', '|', $replaced_ids);
+		$replaced_ids = (array) explode('|',  $replaced_ids);
 		foreach ( $replaced_ids as $replaced_id ) {
 			if($product_id = wc_get_product_id_by_sku($replaced_id)){
 				$product_ids[] = $product_id;
@@ -412,7 +413,7 @@ function woocommerce_single_replaced_product(){
 	if($replaced_ids){
 		echo '<span class="replaced-by-title">Product Replaced by:</span>';
 		foreach($replaced_ids as $product_id){
-			echo '<span class="replaced-by-sku"><a href="'.get_permalink($product_id).'" style="display:block" title ="'.get_product_name($product_id).'">'.$product->get_sku().'</a></span>';
+			echo '<span class="replaced-by-sku"><a href="'.get_permalink($product_id).'" style="display:block" title ="'.get_product_name($product_id).' - '.get_post_meta( $product_id, '_sku', true ).'">'.get_post_meta( $product_id, '_sku', true ).'</a></span>';
 		}
 	}
 }
@@ -550,40 +551,52 @@ function woo_single_shop_layout_hack(){
 }
 function render_expo_360(){
 	global $product, $post;
-	$attachment_ids  = $product->get_gallery_attachment_ids();
-	$images_urls = array();
-	$images_urlsBig = array();
-	$images_urlsName = array();
-
-	if ( ! empty( $attachment_ids ) && ! empty( $attachment_ids[0] ) ) {
-
-		foreach ( $attachment_ids as $image_id ) {
-			if ( is_numeric( $image_id ) ) {
-				$timg = wp_get_attachment_image_src((int) $image_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ) );
-				$images_urls[] = $timg[0];
-				$images_urlsBig[] = wp_get_attachment_url( (int) $image_id );
-				$tname = explode('/', wp_get_attachment_url( (int) $image_id ));
-				$images_urlsName[] = array_pop($tname );
+	
+	if ( has_post_thumbnail() ) {
+		$thumbnail_id 	= get_post_thumbnail_id();
+		$attachment_ids  = $product->get_gallery_attachment_ids();
+		$attachment_count = count( $attachment_ids );
+		$images_urls = array();
+		$images_urlsBig = array();
+		$images_urlsName = array();
+		$timg = wp_get_attachment_image_src((int) $thumbnail_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ) );
+		$width = $timg[1];
+		$height = $timg[2];
+	
+		if ( $attachment_count > 1 ) {
+			
+			array_unshift($attachment_ids, $thumbnail_id);
+			
+			foreach ( $attachment_ids as $image_id ) {
+				if ( is_numeric( $image_id ) ) {
+					$timg = wp_get_attachment_image_src((int) $image_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ) );
+					$images_urls[] = $timg[0];
+					$images_urlsBig[] = wp_get_attachment_url( (int) $image_id );
+					$tname = explode('/', wp_get_attachment_url( (int) $image_id ));
+					$images_urlsName[] = array_pop($tname );
+					
+				}
 			}
+	
+			?>
+			<div class="images">
+				<div class="image woocommerce-360-container" style="max-width:458px;">
+				<div id="viewer" style="position:relative; overflow:hidden;" class=""></div>
+				</div>
+			</div>
+			<script type="text/javascript">
+				jQuery(document).ready(function($) {
+					var imgArray = <?php echo json_encode( $images_urls );?>;
+					var imgArrayBig = <?php echo json_encode( $images_urlsBig );?>;
+					var imgArrayName = <?php echo json_encode( $images_urlsName );?>;
+	
+					//console.log(imgArrayName.length);
+					var expo = new Expo360({xml:"<?php echo THEME_ASSETS . 'js/360/settings.xml';?>", where:"#viewer", imgArray:imgArray, imgArrayBig:imgArrayBig, imgArrayName:imgArrayName, width: <?php echo $width;?>, height:<?php echo $height;?>});
+				});
+			</script>
+			
+			<?php
 		}
-
-		?>
-        <div class="images">
-        	<div class="image woocommerce-360-container" style="max-width:458px;">
-        	<div id="viewer" style="position:relative; overflow:hidden;" class=""></div>
-            </div>
-        </div>
-        <script type="text/javascript">
-			jQuery(document).ready(function($) {
-				var imgArray = <?php echo json_encode( $images_urls );?>;
-				var imgArrayBig = <?php echo json_encode( $images_urlsBig );?>;
-				var imgArrayName = <?php echo json_encode( $images_urlsName );?>;
-
-				//console.log(imgArrayName.length);
-				var expo = new Expo360({xml:"<?php echo THEME_ASSETS . 'js/360/settings.xml';?>", where:"#viewer", imgArray:imgArray, imgArrayBig:imgArrayBig, imgArrayName:imgArrayName});
-			});
-		</script>
-        <?php
 	}
 }
 add_action( 'websquare_before_header', 'woo_single_enquire_form_validation', 9999);
@@ -599,6 +612,7 @@ function woo_single_minimum_notice(){
 }
 function woo_single_please_log_in(){
 	?>
+    <?php woocommerce_single_replaced_product();?>
 	<div class="please-log-in clearfix"><a href="<?php echo get_permalink(7);?>"><?php _e('Login to view prices and order online', 'shorts');?></a></div>
     <span class="discount-note-block">Order online <span class="bold">Get 2% Off</span>*</span>
 	<div class="discount-note-terms"><p><?php _e('*Discount applicable to goods only when order is placed online','shorts');?></p></div>
@@ -607,8 +621,8 @@ function woo_single_please_log_in(){
 function woo_single_enquire_button(){
 }
 function woo_single_enquire_form_validation(){
-	global $product;
-	if(isset($product) && $product->post->post_title != ""){
+	global $product, $post;
+	//if(isset($product) && $product->post_title != ""){
 		if(isset($_POST['slsubmit'])){
 			$errors = array();
 			if(getenv("HTTP_REFERER") != get_permalink()){
@@ -640,7 +654,7 @@ function woo_single_enquire_form_validation(){
 				$slmessage = esc_textarea($_POST['slmessage']);
 
 				// From
-				$header = 'From: '.$slname.' <'.$slemail.'>' . "\r\n";
+				$header = 'From: Shorts Industries Limited <info@shorts-lifts.co.uk>' . "\r\n";
 				// Details
 				$message = "Product Name: " . $slpartnumber . "\n\n";
 				$message .= "Name: " . $slname . "\n";
@@ -667,7 +681,7 @@ function woo_single_enquire_form_validation(){
 				}
 			}
 		}
-	}
+	//}
 }
 function woo_single_enquire_form(){
 	get_template_part( 'includes/forms/form', 'enquire-product' );
@@ -858,7 +872,7 @@ function woo_add_custom_linked_products_fields() {
 		array(
 			'id'          => '_product_replaced_by_ids',
 			'label'       => __( 'Replaced By (SKUs)', 'woocommerce' ),
-			'description' => __( 'Comma sparated values, no spaces', 'woocommerce' ),
+			'description' => __( '"|" or "," sparated values, no spaces', 'woocommerce' ),
 			'desc_tip'    => true,
 		)
 	);
@@ -1423,8 +1437,11 @@ function wc_extened_process_registration(){
 		// send the user a confirmation and their login details
 		//$mailer = new WC_Emails;
 		//$mailer->customer_new_account( $customer_id, $password );
+		
+		$nucmessage = $username. ' - ' . $user_email . ' is pending for review.';
+		wp_mail( 'info@shorts-lifts.co.uk', 'New User Has Registered', $nucmessage );
 
-		wc_add_notice( __( 'Your account is pending and will be reviewed shortly. You will get email confirmation when your account has been activated by the Shorts Team. If you have any questions, please contact us on 01274 305 066.', 'woocommerce'), 'error' ) ;
+		wc_add_notice( __( 'Your account is pending and will be reviewed shortly. You will get email confirmation when your account has been activated by the Shorts Team. If you have any questions, please contact us on 01274 305 066.', 'woocommerce'), 'error' );
 
 		// Redirect
 		if ( wp_get_referer() ) {
@@ -1771,6 +1788,7 @@ function woo_custom_get_country_locale($fields){
 			'required'    => false
 		)
 	);
+	
 
 	return $fields;
 }
@@ -1845,8 +1863,8 @@ if ( !function_exists('save_extra_fields_to_user') ) {
 	}
 }
 
-add_filter( 'woocommerce_get_product_attributes', 'mycode_display_extra_attribute', 20 );
-function mycode_display_extra_attribute( $attributes ) {
+add_filter( 'woocommerce_get_product_attributes', 'woocommerce_display_extra_attribute', 20 );
+function woocommerce_display_extra_attribute( $attributes ) {
 	$_oem_part_number = get_post_meta( get_the_ID(), '_oem_part_number', true );
 	if($_oem_part_number){
 		$attribute = array(
@@ -1874,4 +1892,57 @@ function mycode_display_extra_attribute( $attributes ) {
 	}
 
 	return $attributes;
+}
+if( current_user_can('manage_options') ) {
+add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
+}
+function custom_override_checkout_fields( $fields ) {
+     //$fields['order']['order_comments']['placeholder'] = 'My new placeholder';
+	 //print_result($fields);
+     return $fields;
+}
+
+add_filter( 'woocommerce_billing_fields', 'custom_woocommerce_billing_fields', 10, 1 );
+function custom_woocommerce_billing_fields( $address_fields ) {
+
+	$address_fields['billing_postcode']['validate'] = '';
+	return $address_fields;
+}
+
+add_filter( 'woocommerce_shipping_fields', 'custom_woocommerce_shipping_fields', 10, 1 );
+function custom_woocommerce_shipping_fields( $address_fields ) {
+
+	$address_fields['shipping_postcode']['validate'] = '';
+	return $address_fields;
+}
+
+function get_ie_postcodes(){
+	$postcodes = array(
+		'Dublin 1',
+		'Dublin 2',
+		'Dublin 3',
+		'Dublin 4',
+		'Dublin 5',
+		'Dublin 6',
+		'Dublin 7',
+		'Dublin 8',
+		'Dublin 9',
+		'Dublin 10',
+		'Dublin 11',
+		'Dublin 12',
+		'Dublin 13',
+		'Dublin 14',
+		'Dublin 15',
+		'Dublin 16',
+		'Dublin 17',
+		'Dublin 18',
+		'Dublin 19',
+		'Dublin 20',
+		'Dublin 21',
+		'Dublin 22',
+		'Dublin 23',
+		'Dublin 24',
+		'All other areas'
+	);
+	return $postcodes;
 }

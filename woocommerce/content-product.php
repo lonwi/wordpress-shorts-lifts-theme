@@ -87,7 +87,7 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] ) {
 		}else{
 			echo '<span class="replaced-by-title">Product Replaced by:</span>';
 			foreach($replaced_ids as $product_id){
-				echo '<span class="replaced-by-sku"><a href="'.get_permalink($product_id).'" style="display:block" title ="'.get_product_name($product_id).'">'.$product->get_sku().'</a></span>';
+				echo '<span class="replaced-by-sku"><a href="'.get_permalink($product_id).'" style="display:block" title ="'.get_product_name($product_id).' - '.get_post_meta( $product_id, '_sku', true ).'">'.get_post_meta( $product_id, '_sku', true ).'</a></span>';
 			}
 		}
 
