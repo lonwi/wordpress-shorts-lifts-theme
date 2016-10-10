@@ -38,10 +38,10 @@ Stylesheet: Sidebar Stylesheet
 h4.filter-by-title {
 	background:none;
 	border:0;
-	
+
 	margin:20px 20px 20px;
 	padding:0;
-	
+
 	font-size:14px;
 	font-weight:400;
 }
@@ -49,10 +49,10 @@ h4.filter-by-title {
 	h4.widgettitle {
 		background:none;
 		border:0;
-		
+
 		margin:0 20px 20px;
 		padding:0;
-		
+
 		font-size:14px;
 		font-weight:400;
 	}
@@ -60,25 +60,25 @@ h4.filter-by-title {
 		padding:0;
 		margin:0;
 		li.chosen {
-			
-			background:#e8e8e8;
+
+			background:@green;
 			border:none;
-			
+
 			display:block;
-			
-			color:@black;
+
+			color:@white;
 			font-weight:@semi-bold;
 			font-size:12px;
 			list-style:none;
-			
+
 			.border-radius(25px);
-			
+
 			padding:0;
 			margin:0 0 10px;
 			font-size:12px;
-			
+
 			a {
-				color:@black;
+				color:@white;
 				display:block;
 				font-size:12px;
 				line-height:normal;
@@ -92,20 +92,20 @@ h4.filter-by-title {
 .widget.widget_layered_nav {
 	h4.widgettitle {
 		border:none;
-		background:#e8e8e8;
-		color:@black;
+		background:@green;
+		color:@white;
 		font-weight:@semi-bold;
 		.border-radius(25px);
 		padding:0;
 		margin:0;
 		font-size:12px;
 		a {
-			color:@black;
+			color:@white;
 			display:block;
 			font-size:12px;
 			position:relative;
 			padding:8px 40px 8px 20px;
-			
+
 		}
 		span {
 			display:inline-block;
@@ -114,13 +114,13 @@ h4.filter-by-title {
 			right:10px;
 			bottom:0;
 			width:30px;
-			background:url(../images/icons.png) no-repeat -152px center;
+			background:url(../images/icons.png) no-repeat -392px center;
 		}
 		&.trigger-open {
 			span {
-				background:url(../images/icons.png) no-repeat -182px center;
+				background:url(../images/icons.png) no-repeat -422px center;
 			}
-			
+
 		}
 	}
 	ul {
@@ -184,7 +184,7 @@ h4.filter-by-title {
 				font-size:12px;
 				line-height:16px;
 				color:@black;
-				
+
 			}
 			&.current-cat {
 				> a {
@@ -207,13 +207,13 @@ h4.filter-by-title {
 				padding-left:10px;
 			}
 		}
-		
+
 	}
 	ul.product-categories {
 		ul.children {
 			display:none;
 		}
-		
+
 		.cat-parent {
 			> a {
 				> span {
@@ -249,7 +249,7 @@ h4.filter-by-title {
 				}
 			}
 		}
-		
+
 		> li > ul {
 			li.trigger-open {
 				> a {

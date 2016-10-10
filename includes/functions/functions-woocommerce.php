@@ -613,7 +613,7 @@ function woo_single_minimum_notice(){
 function woo_single_please_log_in(){
 	?>
     <?php woocommerce_single_replaced_product();?>
-	<div class="please-log-in clearfix"><a href="<?php echo get_permalink(7);?>"><?php _e('Login to view prices and order online', 'shorts');?></a></div>
+	<div class="please-log-in clearfix"><a href="<?php echo get_permalink(7);?>"><?php _e('Log in to view prices and order online', 'shorts');?></a></div>
     <span class="discount-note-block">Order online <span class="bold">Get 2% Off</span>*</span>
 	<div class="discount-note-terms"><p><?php _e('*Discount applicable to goods only when order is placed online','shorts');?></p></div>
 	<?php
@@ -1096,7 +1096,9 @@ function woo_lift_view_details(){
 	global $post, $product;
 	echo '<div class="product-under-title clearfix">';
 	echo '<a href="'.get_permalink($post->ID).'" title="'.esc_html($post->post_title).'" class="product-details-link">View Details</a>';
-
+	if(!is_user_logged_in() ){
+		echo '<a href="'.get_permalink(7).'" class="product-details-please-log-in">Log in for prices</a>';
+	}
 	if(is_user_logged_in() ){
 	$enquire_mode = get_post_meta( $post->ID, '_enquire_mode', true );
 	if( ($product->is_purchasable() && $product->is_in_stock() && $product->price > 0 && $enquire_mode != 'yes' && get_user_resticted_manufacturers() === false) )

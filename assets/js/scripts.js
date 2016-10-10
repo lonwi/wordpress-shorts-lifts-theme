@@ -186,9 +186,16 @@
 
 			var widget = jQuery('.widget_layered_nav');
 			var widgetTitleLink = jQuery('.widgettitle > a');
+			
+			widget.each(function(){
+				if(jQuery(this).find('.chosen').length > 0){
+					jQuery(this).find('.widgettitle').addClass('trigger-open');
+					jQuery(this).find('ul').show();
+				}
+			});
 			// Hack for opening all of them at the begining
-			widget.find('.widgettitle').addClass('trigger-open');
-			widget.find('ul').show();
+			//widget.find('.widgettitle').addClass('trigger-open');
+			//widget.find('ul').show();
 			// End of hack
 
 			widgetTitleLink.on('click', function(){

@@ -240,21 +240,32 @@ ul.products {
 			margin:10px 0;
 			font-size:12px;
 			.product-details-link {
+				background-color:@gray;
+				color:@white;
 				display:inline-block;
 				float:left;
-				text-transform: uppercase;
+				font-size:10px;
 				font-weight:600;
-				color:@gray-light;
-				padding:4px 0;
-				&:hover {
-					color:@green;
-				}
+				padding:4px 12px;
+				text-transform: uppercase;
+				.border-radius(25px);
 			}
 			.separator {
 				display:inline-block;
 				float:left;
 				margin:0 8px;
 				padding:4px 0;
+			}
+			.product-details-please-log-in {
+				background-color:@green;
+				color:@white;
+				display:inline-block;
+				float:right;
+				font-size:10px;
+				font-weight:600;
+				padding:4px 12px;
+				text-transform: uppercase;
+				.border-radius(25px);
 			}
 			.product-add-link {
 				display:inline-block;
