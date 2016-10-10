@@ -1133,10 +1133,10 @@ function woo_lift_before_content(){
 function woo_lift_after_content(){
 
 	echo '<div class="woo-after-loop-cont clearfix">';
-	echo '<div class="sixcol first">';
+	echo '<div class="fourcol first">';
 	do_action( 'woocommerce_after_shop_loop_custom_1' );
 	echo '</div>';
-	echo '<div class="sixcol last">';
+	echo '<div class="fourcol">';
 	do_action( 'woocommerce_after_shop_loop_custom_2' );
 	echo '</div>';
 	echo '<div class="fourcol last">';

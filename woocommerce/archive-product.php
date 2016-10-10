@@ -87,5 +87,5 @@ get_header( 'shop' );
 		 */
 		do_action( 'woocommerce_sidebar' );
 	?>
-
+<?php get_template_part('includes/blocks/block', 'footer-lift-spares');?>
 <?php get_footer( 'shop' ); ?>

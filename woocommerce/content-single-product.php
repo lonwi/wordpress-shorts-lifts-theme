@@ -78,3 +78,4 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 </div><!-- #product-<?php the_ID(); ?> -->
 
 <?php do_action( 'woocommerce_after_single_product' ); ?>
+<?php get_template_part('includes/blocks/block', 'footer-lift-spares');?>
