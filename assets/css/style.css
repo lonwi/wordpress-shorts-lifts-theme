@@ -3077,8 +3077,61 @@ Stylesheet: Content Stylesheet
   margin: 0;
   padding: 0;
 }
-.lift-spares-slider .sl-slider-container .bx-controls-direction a {
-  display: none;
+
+.lift-spares-slider .sl-slider-container .bx-controls .bx-pager {
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	z-index:2;
+	text-align:center;
+}
+.lift-spares-slider .sl-slider-container .bx-controls .bx-pager {
+	
+}
+.lift-spares-slider .sl-slider-container .bx-controls .bx-controls-direction a {
+	
+}
+.lift-spares-slider .sl-slider-container .bx-controls .bx-controls-direction a.bx-prev {
+	left:14px;
+}
+.lift-spares-slider .sl-slider-container .bx-controls .bx-controls-direction a.bx-next {
+	right:14px;
+}
+.bx-wrapper .bx-pager {
+  text-align: center;
+  font-size: .85em;
+  font-family: Arial;
+  font-weight: bold;
+  color: #666;
+  padding-top: 20px;
+}
+.bx-wrapper .bx-pager.bx-default-pager a {
+  background: #666;
+  text-indent: -9999px;
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  outline: 0;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+.bx-wrapper .bx-pager.bx-default-pager a:hover,
+.bx-wrapper .bx-pager.bx-default-pager a.active,
+.bx-wrapper .bx-pager.bx-default-pager a:focus {
+  background: #000;
+}
+.bx-wrapper .bx-pager-item,
+.bx-wrapper .bx-controls-auto .bx-controls-auto-item {
+  display: inline-block;
+  *zoom: 1;
+  *display: inline;
+}
+.bx-wrapper .bx-pager-item {
+  font-size: 0;
+  line-height: 0;
 }
 /* Lift Spares Assisted Search Page
 ******************************************************************/

@@ -4,7 +4,7 @@
 <div class="block-slider container clearfix">
     <div class="row">
     	<div class="twothirdcol lift-spares-slider first">
-        	<?php echo get_sl_slider($lift_spares_slider->ID);?>
+        	<?php echo get_sl_slider($lift_spares_slider->ID, true);?>
         </div>
         <div class="onethirdcol last">
         	<ul class="lift-spares-boxes">

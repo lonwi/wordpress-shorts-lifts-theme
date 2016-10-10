@@ -1,5 +1,5 @@
 <?php
-function get_sl_slider($id){
+function get_sl_slider($id, $pager = 'false'){
 	$result = '';
 	if(!isset($id))
 		return $result;
@@ -23,14 +23,12 @@ function get_sl_slider($id){
 			slSlider'.$id.'.bxSlider({
 				auto: true,
 				pause: 8000,
-				pager: false,
+				pager: '.$pager.',
 				mode: "fade",
 			});
 		};
 		});
 	</script>';
-	//print_result($slides);
-	
 	return $result;
 }
 function get_sl_slide($slide){
